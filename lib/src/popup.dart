@@ -71,6 +71,7 @@ class _PopupContent extends StatelessWidget {
   final EdgeInsets contentPadding;
   final double? contentRadius;
   final BoxDecoration? contentDecoration;
+  final EdgeInsetsGeometry? margin;
 
   const _PopupContent({
     Key? key,
@@ -85,6 +86,7 @@ class _PopupContent extends StatelessWidget {
     this.contentRadius,
     required this.contentPadding,
     this.contentDecoration,
+    this.margin,
   }) : super(key: key);
 
   @override
@@ -94,10 +96,11 @@ class _PopupContent extends StatelessWidget {
         Container(
           key: childKey,
           padding: contentPadding,
-          margin: const EdgeInsets.symmetric(vertical: 10).copyWith(
-            top: arrowDirection == _ArrowDirection.bottom ? 0 : null,
-            bottom: arrowDirection == _ArrowDirection.top ? 0 : null,
-          ),
+          margin: margin ??
+              const EdgeInsets.symmetric(vertical: 10).copyWith(
+                top: arrowDirection == _ArrowDirection.bottom ? 0 : null,
+                bottom: arrowDirection == _ArrowDirection.top ? 0 : null,
+              ),
           constraints: const BoxConstraints(minWidth: 50),
           decoration: contentDecoration ??
               BoxDecoration(
@@ -112,19 +115,20 @@ class _PopupContent extends StatelessWidget {
               ),
           child: child,
         ),
-        Positioned(
-          top: arrowDirection == _ArrowDirection.top ? 2 : null,
-          bottom: arrowDirection == _ArrowDirection.bottom ? 2 : null,
-          left: arrowHorizontal,
-          child: RotatedBox(
-            key: arrowKey,
-            quarterTurns: arrowDirection == _ArrowDirection.top ? 2 : 4,
-            child: CustomPaint(
-              size: showArrow ? const Size(16, 8) : Size.zero,
-              painter: _TrianglePainter(color: arrowColor ?? Colors.white),
+        if (showArrow)
+          Positioned(
+            top: arrowDirection == _ArrowDirection.top ? 2 : null,
+            bottom: arrowDirection == _ArrowDirection.bottom ? 2 : null,
+            left: arrowHorizontal,
+            child: RotatedBox(
+              key: arrowKey,
+              quarterTurns: arrowDirection == _ArrowDirection.top ? 2 : 4,
+              child: CustomPaint(
+                size: showArrow ? const Size(16, 8) : Size.zero,
+                painter: _TrianglePainter(color: arrowColor ?? Colors.white),
+              ),
             ),
           ),
-        ),
       ],
     );
   }
