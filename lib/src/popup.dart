@@ -14,6 +14,7 @@ class CustomPopup extends StatelessWidget {
   final EdgeInsets contentPadding;
   final double? contentRadius;
   final BoxDecoration? contentDecoration;
+  final EdgeInsetsGeometry? contentMargin;
 
   const CustomPopup({
     super.key,
@@ -28,6 +29,7 @@ class CustomPopup extends StatelessWidget {
     this.contentPadding = const EdgeInsets.all(15),
     this.contentRadius,
     this.contentDecoration,
+    this.contentMargin,
   });
 
   void _show(BuildContext context) {
@@ -45,6 +47,7 @@ class CustomPopup extends StatelessWidget {
       contentRadius: contentRadius,
       contentDecoration: contentDecoration,
       child: content,
+      contentMargin: contentMargin,
     ));
   }
 
@@ -71,7 +74,7 @@ class _PopupContent extends StatelessWidget {
   final EdgeInsets contentPadding;
   final double? contentRadius;
   final BoxDecoration? contentDecoration;
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? contentMargin;
 
   const _PopupContent({
     Key? key,
@@ -86,7 +89,7 @@ class _PopupContent extends StatelessWidget {
     this.contentRadius,
     required this.contentPadding,
     this.contentDecoration,
-    this.margin,
+    this.contentMargin,
   }) : super(key: key);
 
   @override
@@ -96,7 +99,7 @@ class _PopupContent extends StatelessWidget {
         Container(
           key: childKey,
           padding: contentPadding,
-          margin: margin ??
+          margin: contentMargin ??
               const EdgeInsets.symmetric(vertical: 10).copyWith(
                 top: arrowDirection == _ArrowDirection.bottom ? 0 : null,
                 bottom: arrowDirection == _ArrowDirection.top ? 0 : null,
@@ -185,6 +188,7 @@ class _PopupRoute extends PopupRoute<void> {
   final EdgeInsets contentPadding;
   final double? contentRadius;
   final BoxDecoration? contentDecoration;
+  final EdgeInsetsGeometry? contentMargin;
 
   double _maxHeight = _viewportRect.height;
   _ArrowDirection _arrowDirection = _ArrowDirection.top;
@@ -209,6 +213,7 @@ class _PopupRoute extends PopupRoute<void> {
     required this.contentPadding,
     this.contentRadius,
     this.contentDecoration,
+    this.contentMargin,
   }) : super(
           settings: settings,
           filter: filter,
@@ -330,6 +335,7 @@ class _PopupRoute extends PopupRoute<void> {
       contentRadius: contentRadius,
       contentDecoration: contentDecoration,
       child: child,
+      contentMargin: contentMargin,
     );
     if (!animation.isCompleted) {
       child = FadeTransition(
