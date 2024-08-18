@@ -15,6 +15,7 @@ class CustomPopup extends StatelessWidget {
   final double? contentRadius;
   final BoxDecoration? contentDecoration;
   final EdgeInsetsGeometry? contentMargin;
+  final double someOffset;
 
   const CustomPopup({
     super.key,
@@ -30,6 +31,7 @@ class CustomPopup extends StatelessWidget {
     this.contentRadius,
     this.contentDecoration,
     this.contentMargin,
+    this.someOffset = 0,
   });
 
   void _show(BuildContext context) {
@@ -48,6 +50,7 @@ class CustomPopup extends StatelessWidget {
       contentDecoration: contentDecoration,
       child: content,
       contentMargin: contentMargin,
+      someOffset: someOffset,
     ));
   }
 
@@ -199,6 +202,7 @@ class _PopupRoute extends PopupRoute<void> {
   double? _top;
   double? _left;
   double? _right;
+  double someOffset;
 
   _PopupRoute({
     RouteSettings? settings,
@@ -214,6 +218,7 @@ class _PopupRoute extends PopupRoute<void> {
     this.contentRadius,
     this.contentDecoration,
     this.contentMargin,
+    this.someOffset = 0,
   }) : super(
           settings: settings,
           filter: filter,
@@ -290,7 +295,7 @@ class _PopupRoute extends PopupRoute<void> {
       _scaleAlignDy = 1;
     } else {
       // Below the target
-      _top = targetRect.bottom;
+      _top = targetRect.bottom - someOffset;
       _arrowDirection = _ArrowDirection.top;
       _scaleAlignDy = 0;
     }
